@@ -23,7 +23,7 @@ docker run -t -i --rm --volume privateregistry_registry-certs:/certs --volume $(
 ### HTTP Basic Auth
 Create a user with the `htadduser` service in `tools.yml`.  For example, to add the user `oliver` with password `bad0a95b4a4ac2d7289f9d905c3b6f4eb82203b3` run the command below and restart the registry:
 ```
-docker-compose -f docker-compose.yml -f tools.yml run htadduser oliver bad0a95b4a4ac2d7289f9d905c3b6f4eb82203b3
+docker-compose -f docker-compose.yml -f docker-compose-tools.yml run htadduser oliver bad0a95b4a4ac2d7289f9d905c3b6f4eb82203b3
 docker-compose restart registry
 ```
 ## Using a real certificate
