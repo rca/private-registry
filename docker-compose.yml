@@ -1,0 +1,38 @@
+version: '2'
+services:
+  registry:
+    image: registry:2
+    restart: always
+    depends_on:
+      - security
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/registry.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/registry.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - registry-data:/var/lib/registry
+    volumes_from:
+      - security
+
+  security:
+    build: .
+    environment:
+      - REGISTRY_DOMAIN_NAME
+    volumes:
+      - registry-auth:/auth
+      - registry-certs:/certs
+
+
+volumes:
+  registry-auth:
+    driver: local
+
+  registry-certs:
+    driver: local
+
+  registry-data:
+    driver: local

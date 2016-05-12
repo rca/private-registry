@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+username=$1
+password=$2
+
+if [ "${password}" == "" ]; then
+    echo "$(basename $0) <username> <password>" 1>&2
+    exit 1;
+fi;
+
+HTPASSWD=/auth/htpasswd
+
+touch ${HTPASSWD}
+
+sed -i -e "s/^${username}:.*//" ${HTPASSWD}
+
+htpasswd -Bbn ${username} ${password} > ${HTPASSWD}

@@ -1,0 +1,23 @@
+#!/bin/bash
+# from: https://hub.docker.com/r/centurylink/openssl/~/dockerfile/
+set -e
+
+REGISTRY_DOMAIN_NAME=${REGISTRY_DOMAIN_NAME:-registry}
+
+CERTS_ROOT=${CERTS_ROOT:-/certs}
+
+CRT_PATH=${CERTS_ROOT}/registry.crt
+CSR_PATH=${CERTS_ROOT}/registry.csr
+KEY_PATH=${CERTS_ROOT}/registry.key
+
+# do not overwrite existing certs
+if [ -e ${KEY_PATH} ]; then
+    exit;
+fi;
+
+/usr/bin/openssl genrsa -out ${KEY_PATH} 1024
+
+/usr/bin/openssl req -new -newkey rsa:4096 -days 365 -nodes \
+    -subj "/C=/ST=/L=/O=/CN=${REGISTRY_DOMAIN_NAME}" -keyout ${KEY_PATH} -out ${CSR_PATH}
+
+/usr/bin/openssl x509 -req -days 365 -in ${CSR_PATH} -signkey ${KEY_PATH} -out ${CRT_PATH}
