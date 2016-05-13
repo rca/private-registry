@@ -19,7 +19,7 @@ services:
       - security
 
   security:
-    build: .
+    image: roberto/private-registry
     environment:
       - REGISTRY_DOMAIN_NAME
     volumes:
