@@ -4,6 +4,7 @@ services:
     image: registry:2
     restart: always
     depends_on:
+      - config
       - security
     ports:
       - 5000:5000
@@ -15,8 +16,27 @@ services:
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
     volumes:
       - registry-data:/var/lib/registry
+      - registry-config:/etc/docker/registry
     volumes_from:
       - security
+
+  config:
+    image: registry:2
+    entrypoint: ''
+    volumes:
+      - registry-config:/config
+    command: >
+      /bin/bash -c '
+      config_path=/config/config.yml;
+
+      if [ ! -e $$config_path ]; then
+          cp /etc/docker/registry/config.yml $$config_path;
+      fi;
+
+      grep -q delete $$config_path || sed -i -e "s/^storage:/storage:\n    delete:\n        enabled: true/" $$config_path
+
+      #echo "abusing strings is fun!"
+      '
 
   security:
     image: roberto/private-registry
@@ -32,6 +52,9 @@ volumes:
     driver: local
 
   registry-certs:
+    driver: local
+
+  registry-config:
     driver: local
 
   registry-data:
