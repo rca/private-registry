@@ -9,7 +9,7 @@ docker pull roberto/private-registry
 ```
 The instructions below use two Docker Compose files, `docker-compose.yml` and docker-compose-`tools.yml`, and assume these Compose files are located in a folder named `private-registry`.  They can be extracted from the Docker image with the command:
 ```
-docker run -t -i --rm --volume $(pwd):/host alpine:latest /bin/sh -c 'cp /*.yml /host/'
+docker run -t -i --rm --volume $(pwd):/host roberto/private-registry /bin/sh -c 'cp /*.yml /host/'
 ```
 ## Usage
 Start the registry container with docker-compose:
