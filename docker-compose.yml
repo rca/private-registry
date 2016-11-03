@@ -33,7 +33,7 @@ services:
           cp /etc/docker/registry/config.yml $$config_path;
       fi;
 
-      grep -q delete $$config_path || sed -i -e "s/^storage:/storage:\n    delete:\n        enabled: true/" $$config_path
+      grep -q delete $$config_path || sed -i -e "s/^storage:/storage:\n  delete:\n    enabled: true/" $$config_path
 
       #echo "abusing strings is fun!"
       '
