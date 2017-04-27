@@ -1,7 +1,7 @@
 version: '2'
 services:
   registry:
-    image: registry:2
+    build: .
     restart: always
     depends_on:
       - config
@@ -9,11 +9,14 @@ services:
     ports:
       - 5000:5000
     environment:
-      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/registry.crt
-      REGISTRY_HTTP_TLS_KEY: /certs/registry.key
-      REGISTRY_AUTH: htpasswd
-      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
-      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      - REGISTRY_HTTP_TLS_CERTIFICATE
+      - REGISTRY_HTTP_TLS_KEY
+      - REGISTRY_AUTH
+      - REGISTRY_AUTH_HTPASSWD_PATH
+      - REGISTRY_AUTH_HTPASSWD_REALM
+      - REGISTRY_CONF
+      - REGISTRY_TLS
+      - REGISTRY_AUTH_ENTRIES
     volumes:
       - registry-data:/var/lib/registry
       - registry-config:/etc/docker/registry

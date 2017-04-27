@@ -1,10 +1,10 @@
-FROM debian:jessie
+FROM registry:2
 MAINTAINER Roberto Aguilar <roberto.c.aguilar@gmail.com>
 
-RUN apt-get update && apt-get install -y apache2-utils openssl
+RUN apk update && apk add apache2-utils bash openssl
 
 ADD files/ /
-RUN chmod +x /usr/local/bin/*
+RUN chmod +x /usr/local/bin/* /registry-entrypoint.sh
 
 ADD docker-compose.yml /
 ADD docker-compose-tools.yml /
@@ -14,4 +14,8 @@ RUN mkdir -p /auth && touch /auth/htpasswd
 VOLUME /auth
 VOLUME /certs
 
-CMD ["/usr/local/bin/gen-ssl-cert"]
+ENTRYPOINT ["/registry-entrypoint.sh"]
+
+# same CMD from upstream registry image
+# https://github.com/docker/distribution-library-image/blob/576b139d6eac5b35c9b3e9fe6c2e5132b0c7e03b/Dockerfile
+CMD ["/etc/docker/registry/config.yml"]
