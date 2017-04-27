@@ -1,7 +1,0 @@
-version: '2'
-services:
-  htadduser:
-    build: .
-    entrypoint: /usr/local/bin/htadduser
-    volumes_from:
-      - security

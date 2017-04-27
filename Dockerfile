@@ -7,7 +7,6 @@ ADD files/ /
 RUN chmod +x /usr/local/bin/* /registry-entrypoint.sh
 
 ADD docker-compose.yml /
-ADD docker-compose-tools.yml /
 
 RUN mkdir -p /auth && touch /auth/htpasswd
 
