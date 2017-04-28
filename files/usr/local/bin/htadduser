@@ -11,8 +11,13 @@ fi;
 
 HTPASSWD=/auth/htpasswd
 
+mkdir -p $(dirname ${HTPASSWD})
 touch ${HTPASSWD}
 
+# remove existing user entry
 sed -i -e "s/^${username}:.*//" ${HTPASSWD}
 
-htpasswd -Bbn ${username} ${password} > ${HTPASSWD}
+htpasswd -Bbn ${username} ${password} >> ${HTPASSWD}
+
+# remove empty lines
+sed -i -e '/^$/d' ${HTPASSWD}
