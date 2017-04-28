@@ -11,9 +11,9 @@ services:
       - REGISTRY_AUTH
       - REGISTRY_AUTH_HTPASSWD_PATH
       - REGISTRY_AUTH_HTPASSWD_REALM
-      - REGISTRY_CONF
-      - REGISTRY_TLS
-      - REGISTRY_AUTH_ENTRIES
+      - PRIVATEREGISTRY_CONF
+      - PRIVATEREGISTRY_TLS
+      - PRIVATEREGISTRY_AUTH_ENTRIES
     volumes:
       - registry-data:/var/lib/registry
 
