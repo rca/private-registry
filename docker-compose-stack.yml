@@ -1,0 +1,47 @@
+version: '3.3'
+services:
+  registry:
+    image: roberto/private-registry
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_HTTP_TLS_CERTIFICATE
+      - REGISTRY_HTTP_TLS_KEY
+      - REGISTRY_AUTH
+      - REGISTRY_AUTH_HTPASSWD_PATH
+      - REGISTRY_AUTH_HTPASSWD_REALM
+      - PRIVATEREGISTRY_CONF
+      - PRIVATEREGISTRY_TLS
+      - PRIVATEREGISTRY_AUTH_ENTRIES
+    volumes:
+      - docker-registry-registry-data:/var/lib/registry
+    networks:
+      - servicenet
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 120s
+
+
+volumes:
+    docker-registry-registry-data:
+        external:
+            name: docker-registry-registry-data
+
+
+networks:
+  servicenet:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 192.168.32.48/28
