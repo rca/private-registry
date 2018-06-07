@@ -1,0 +1,4 @@
+version: '3.4'
+volumes:
+  docker-registry-registry-data:
+    driver: local
