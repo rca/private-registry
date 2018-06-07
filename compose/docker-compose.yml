@@ -1,10 +1,10 @@
-version: '2'
+version: '3.4'
 services:
-  registry:
-    build: .
-    restart: always
+  app:
+    build: ..
+    image: ${DOCKER_IMAGE}
     ports:
-      - 5000:5000
+      - ${SERVICE_PORT}:5000
     environment:
       - REGISTRY_HTTP_TLS_CERTIFICATE
       - REGISTRY_HTTP_TLS_KEY
@@ -15,9 +15,4 @@ services:
       - PRIVATEREGISTRY_TLS
       - PRIVATEREGISTRY_AUTH_ENTRIES
     volumes:
-      - registry-data:/var/lib/registry
-
-
-volumes:
-  registry-data:
-    driver: local
+      - docker-registry-registry-data:/var/lib/registry

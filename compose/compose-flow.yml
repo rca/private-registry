@@ -1,0 +1,12 @@
+profiles:
+  dev:
+    - docker-compose.yml
+    - deploy
+
+  local:
+    - docker-compose.yml
+    - local
+
+  prod:
+    - docker-compose.yml
+    - deploy

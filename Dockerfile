@@ -6,7 +6,7 @@ RUN apk update && apk add apache2-utils bash openssl
 ADD files/ /
 RUN chmod +x /usr/local/bin/* /registry-entrypoint.sh
 
-ADD docker-compose.yml /
+ADD compose/docker-compose.yml /
 
 RUN mkdir -p /auth && touch /auth/htpasswd
 
