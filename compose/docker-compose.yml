@@ -1,6 +1,6 @@
 version: '3.4'
 services:
-  registry:
+  app:
     image: ${DOCKER_IMAGE}
     ports:
       - ${SERVICE_PORT}:5000
